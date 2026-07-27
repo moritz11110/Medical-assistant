@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Local practice configuration and credentials
+config.json
+.env
+
+# Sensitive local data and generated files
+logs/
+backups/
+agent/word_search_index.json
+*.docx
+*.msg
+*.eml
+*.pst
+# Local test output
+*_test.docx
