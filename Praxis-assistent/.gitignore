@@ -17,3 +17,9 @@ agent/word_search_index.json
 *.pst
 # Local test output
 *_test.docx
+
+.gitignore
+
+AGENTS.md
+
+docs/
