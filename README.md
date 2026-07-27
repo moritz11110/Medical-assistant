@@ -142,27 +142,41 @@ To disable it, set the value back to `false`, start PraxisCopilot once so it rem
 
 ## Troubleshooting
 
-| Problem 
-`py` is not recognised 
-| What to check: 
-Install Python 3.11 from python.org and enable the Python launcher during installation. 
-| Problem 
-The palette does not open 
-| What to check: 
-Confirm that PraxisCopilot is running in the notification area and that `hotkey` is not used by another application. 
-| Problem 
-No Outlook results 
-| What to check: 
-Open Outlook desktop, verify `outlook_ordner`, and confirm that mail sharing is enabled only if approved. 
-| Problem 
-Word request is blocked 
-| What to check: 
-Check `pfade.erlaubte_ordner`, the document location, and the relevant `ki_freigabe` value. 
-enabled only if approved. 
-| Problem 
-Mistral request fails  
-| What to check: 
-Re-run the keyring command, verify internet access, and check that the selected model is available for your Mistral account. |
+### `py` is not recognised
+
+Install Python 3.11 from [python.org](https://www.python.org/downloads/windows/) and select **Add Python to PATH** during installation. Close and reopen PowerShell afterwards. You can also run the commands with the full path to your Python installation.
+
+### The app does not start or disappears immediately
+
+Run `start_praxis_debug.bat` from the project folder. It keeps a console window open so that a Python or dependency error is visible. Confirm that dependencies were installed with:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+### The palette does not open with `Ctrl + Alt + P`
+
+First confirm that the PraxisCopilot tray icon is visible in the Windows notification area. Open the palette from the tray menu to verify that the agent is running. If that works, change `hotkey` in `config.json` to an unused shortcut, restart the agent, and try again.
+
+### An answer stays on “Antwort wird vorbereitet”
+
+Exit the running agent from the tray menu and start it again with `start_praxis.vbs`; this loads the latest code. If the problem remains, use `start_praxis_debug.bat` and verify the Mistral key and internet connection.
+
+### A Word request is blocked or no document is found
+
+The document must be a `.docx` file inside one of the folders listed in `pfade.erlaubte_ordner`. For appointment or Word requests, `ki_freigabe.termin` must be `true`. Confirm that the folder path is correct and restart the agent after changing `config.json`.
+
+### Outlook returns no results
+
+Open Outlook desktop and confirm that `outlook_ordner` exactly matches the target folder. For mail requests, set `ki_freigabe.mail` to `true` only after the practice has approved external AI processing of mail data, then restart the agent.
+
+### A Mistral request fails
+
+Store the key again with the Windows Credential Manager command shown above, verify internet access, and confirm that the Mistral account has access to the model used by the application. Never add the key to `config.json`, a script, or GitHub.
+
+### Autostart does not match the configuration
+
+Change `hintergrundbetrieb.autostart_aktiv` in `config.json`, then start PraxisCopilot once. It synchronises the per-user Windows autostart entry during startup. Exit the tray agent afterwards if you disabled autostart.
 
 ## License
 
